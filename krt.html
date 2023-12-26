@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fake shop</title>
+    <style>
+        #krt{
+
+            color: aqua;
+            display: flex;
+            box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        }
+        #con{
+            padding-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(4,200px);
+            gap:50px ;
+        }
+        #con img{
+            height: 100px;
+            width: 125px;
+            padding-left: 40px;
+            
+
+        }
+        #con>div{
+            height: 400px;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color:rgb(167, 143, 252);
+            box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+            border-radius: 20px;
+        }
+        #mai{
+            display: flex;
+            justify-content: center;
+            background-color: rgb(235, 252, 161);
+            background-image: url("https://erp.croonus.com/img/blog/which-features-should-a-successful-online-store-have.jpg");
+        }
+
+    </style>
+</head>
+<body style="margin: 0%;">
+    <div style="display: flex;flex-direction: column;justify-content: center;padding-bottom: 100px;background-image: url(https://t3.ftcdn.net/jpg/02/98/02/62/360_F_298026229_SmOPh6Uxkd1Cep7FqPfG7F3NT7YcBJFT.jpg);">
+    <div id="krt" >
+        <h1 style="padding-right: 30px;">Availble items:</b></h1>
+    </div>
+    <div style="display: flex;justify-content: center;gap: 20px ;">
+        <select name="" id="se" style="width:200px;height: 35px;">
+            <option value="men's clothing">men's clothing</option>
+            <option value="women's clothing">womens clothing</option>
+            <option value="jewelery"> jewelery</option>
+            <option value="electronics">electronics</option>
+            <option value="All">All</option>
+        </select>
+        <button onclick="ite()" style="width: 100px;background-color: rgb(10, 10, 228);border-radius: 5px;border: none;font-size: 20px;color:blanchedalmond">select</button>
+    </div>
+</div>
+    <div id="mai" >
+    <div id="con" >
+    </div>
+</div>
+</body>
+<script>
+    let i=0
+    let div1=document.getElementById("krt")
+    var e=document.createElement("h1")
+    setInterval(function(){
+        var li=["men's cloth","women's cloth","jewelery","electronic"]
+        var col=["blue","lightgreen","gold","black"]
+        e.innerText=li[i]
+        e.style.color=col[i]
+        if (i===4){
+        e.innerText=li[i-1]
+        console.log(li[i-1])
+        i=-1
+        }     
+        i+=1
+        div1.append(e)
+    },1400)
+    nor()
+    function nor(){
+    let kr=document.getElementById("con")
+    kr.innerHTML=""
+    let api="https://fakestoreapi.com/products"
+    let res=fetch(api)
+    res.then(function(r){
+        return r.json()
+    })
+    .then(function(data){
+        console.log(data)
+        display(data)
+    })
+    function display(data){
+        data.forEach(function(element){
+            let a=document.createElement("div")
+            let ab=document.createElement("div")
+            let b=document.createElement("img")
+            b.setAttribute("src",element.image)
+            let c=document.createElement("h3")
+            c.innerText=element.title
+            c.style.color="black"
+            let d=document.createElement("lable")
+            d.innerText="price: "+"$  "+element.price
+            let e=document.createElement("p")
+            e.innerText=element.description
+            let f=document.createElement("lable")
+            f.innerText="category: "+element.category
+            ab.append(b)
+            a.append(ab,c,d,f)
+            let kr=document.getElementById("con")
+            kr.append(a)
+     })
+    }
+} 
+function ite(){
+        let val=se.value
+        console.log(val)
+        let api="https://fakestoreapi.com/products"
+    let res=fetch(api)
+    let arr1=[]
+    let arr2=[]
+    let arr3=[]
+    let arr4=[]
+    res.then(function(r){
+        return r.json()
+    })
+    .then(function(data){
+        display(data)
+    })
+    function display(data){
+        data.forEach(function(element){
+            if (element.category =="men's clothing"){
+              arr1.push(element)
+            }
+            else if (element.category =="jewelery"){
+                arr2.push(element)
+            }
+            else if (element.category =="electronics"){
+                arr3.push(element)
+            }
+            else if (element.category =="women's clothing"){
+                arr4.push(element)
+                
+            }   
+        })
+        if (val=="men's clothing"){
+            reca(arr1)
+        }
+        else if (val=="jewelery"){
+            reca(arr2)
+        }
+        else if(val=="electronics"){
+            reca(arr3)
+        }
+        else if(val =="women's clothing"){
+            reca(arr4)
+        }
+        else{
+            nor()
+        }
+        
+    }
+}
+function reca(arr){
+    let kr=document.getElementById("con")
+        kr.innerHTML=""
+    
+        arr.forEach(function(element){  
+            let a=document.createElement("div")
+            let ab=document.createElement("div")
+            let b=document.createElement("img")
+            b.setAttribute("src",element.image)
+            let c=document.createElement("h3")
+            c.innerText=element.title
+            c.style.color="black"
+            let d=document.createElement("lable")
+            d.innerText="price: "+"$  "+element.price
+            let e=document.createElement("p")
+            e.innerText=element.description
+            let f=document.createElement("lable")
+            f.innerText="category: "+element.category
+            ab.append(b)
+            a.append(ab,c,d,f)
+            let kr=document.getElementById("con")
+            kr.append(a)
+        })
+    }
+
+</script>
+</html>
