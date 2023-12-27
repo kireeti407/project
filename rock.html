@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Rock Paper Scissors Game</title>
+  <style>
+    *, *:before, *:after {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      background-color: aqua;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+    }
+    .container {
+      width: 45%;
+      min-width: 500px;
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 15px 25px rgba(190, 13, 13, 0.15);
+      text-align: center;
+    }
+    .scores {
+      margin-bottom: 30px;
+      font-size: 20px;
+    }
+    .weapons {
+      width: 80%;
+      margin: auto;
+      display: flex;
+      justify-content: space-around;
+    }
+    .weapons button {
+      background-color: #ffd51b;
+      color: #000000;
+      border: none;
+      font-size: 30px;
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+    .weapons button:hover {
+      transform: scale(1.1);
+    }
+    .details {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+    #result {
+      width: 180px;
+      padding: 10px 0;
+      margin: 30px auto;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    #user_choice, #comp_choice {
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+    span {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body style="background-color: aqua;">
+  <div class="container">
+    <div class="scores">
+      <p>Computer : <span id="computer_score">0</span></p>
+      <p>You : <span id="user_score">0</span></p>
+    </div>
+    <div class="weapons">
+      <button onclick="checker('Rock')">
+        🪨
+      </button>
+      <button onclick="checker('Paper')">
+        📄
+      </button>
+      <button onclick="checker('Scissors')">
+        ✂️
+      </button>
+    </div>
+    <div class="details">
+      <p id="user_choice"></p>
+      <p id="comp_choice"></p>
+      <p id="result"></p>
+    </div>
+  </div>
+  <script>
+    const computer_score = document.getElementById("computer_score");
+    const user_score = document.getElementById("user_score");
+    const user_choice = document.getElementById("user_choice");
+    const comp_choice = document.getElementById("comp_choice");
+    const result = document.getElementById("result");
+
+    let cScore = 0;
+    let pScore = 0;
+
+    function checker(playerChoice) {
+      const cOptions = ["Rock", "Paper", "Scissors"];
+      const cInput = cOptions[Math.floor(Math.random() * 3)];
+      user_choice.textContent = "You chose: " + playerChoice;
+      comp_choice.textContent = "Computer chose: " + cInput;
+      compare(playerChoice, cInput);
+    }
+
+    function compare(playerChoice, computerChoice) {
+      if (playerChoice === computerChoice) {
+        result.textContent = "It's a tie!";
+        result.style.backgroundColor = "#ffd51b";
+      } else if (
+        (playerChoice === "Rock" && computerChoice === "Paper") ||
+        (playerChoice === "Paper" && computerChoice === "Scissors") ||
+        (playerChoice === "Scissors" && computerChoice === "Rock")
+      ) {
+        result.textContent = "You lose!";
+        result.style.backgroundColor = "#ff8b1b";
+        cScore++;
+        computer_score.textContent = cScore;
+      } else {
+        result.textContent = "You win!";
+        result.style.backgroundColor = "#00ff00";
+        pScore++;
+        user_score.textContent = pScore;
+      }
+    }
+  </script>
+</body>
+</html>
